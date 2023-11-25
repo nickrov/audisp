@@ -1,0 +1,25 @@
+---
+# tasks file for audisp-server
+- name: Change incoming tcp port in auditd.conf
+  ansible.builtin.lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: '^tcp_listen_port'
+    line: 'tcp_listen_port = {{ auditd_port }}'
+
+- name: Permit auditd traffic in default zone
+  ansible.posix.firewalld:
+    port: {{ auditd_port }}/{{ auditd_proto }}
+    permanent: true
+    zone: public
+    state: enabled
+    immediate: true
+
+- name: Configure selinux to allow incoming logs on port "{{ auditd_port }}"
+  community.general.seport:
+    ports: "{{ auditd_port }}"
+    proto: tcp
+    setype: audit_port_t
+    state: present
+  notify:
+    - auditd
+

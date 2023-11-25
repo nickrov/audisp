@@ -1,0 +1,38 @@
+---
+# tasks file for audisp-client
+- name: Install plugin
+  ansible.builtin.dnf:
+    name: audisp-plugins
+    state: latest
+
+- name: Add new audisp server to audispd-remote.conf
+  ansible.builtin.lineinfile:
+    path: /etc/audit/audisp-remote.conf
+    regexp: '^remote_server'
+    line: remote_server = {{ audisp_server }}
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+
+- name: Add new auditd port to audispd-remote.conf
+  ansible.builtin.lineinfile:
+    path: /etc/audit/audisp-remote.conf
+    regexp: '^port'
+    line: port = {{ auditd_port }}
+
+- name: Enable audisp-remote plugin via au-remote.conf
+  ansible.builtin.lineinfile:
+    path: /etc/audit/plugins.d/au-remote.conf
+    regexp: '^active'
+    line: active = yes
+    backup: true
+
+- name: Allow auditd to sent logs to port {{ auditd_port }}
+  community.general.seport:
+    ports: "{{ auditd_port }}"
+    proto: tcp
+    setype: auditd_port_t
+    state: present
+  notify:
+    - auditd

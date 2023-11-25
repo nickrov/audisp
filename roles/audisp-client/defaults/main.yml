@@ -1,0 +1,6 @@
+---
+# defaults file for audisp-client
+
+# Set audisp_server to hostname of central logging server
+audisp_server: central-logger
+audid_port: 1000

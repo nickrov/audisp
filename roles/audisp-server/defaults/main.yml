@@ -1,0 +1,4 @@
+---
+# defaults file for audisp-server
+auditd_port: 1000
+auditd_proto: tcp
