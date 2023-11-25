@@ -1,9 +1,16 @@
 ---
 # tasks file for audisp-client
-- name: Install plugin
+- name: Ensure audispd-plugin pkg is installed
   ansible.builtin.dnf:
-    name: audisp-plugins
+    name: audispd-plugins
     state: latest
+
+- name: Ensure firewalld pkg is installed
+  ansible.builtin.dnf:
+    name: firewalld
+    state: latest
+  notify:
+    - firewalld
 
 - name: Add new audisp server to audispd-remote.conf
   ansible.builtin.lineinfile:
@@ -32,7 +39,7 @@
   community.general.seport:
     ports: "{{ auditd_port }}"
     proto: tcp
-    setype: auditd_port_t
+    setype: audit_port_t
     state: present
   notify:
     - auditd

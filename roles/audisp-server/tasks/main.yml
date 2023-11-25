@@ -6,9 +6,22 @@
     regexp: '^tcp_listen_port'
     line: 'tcp_listen_port = {{ auditd_port }}'
 
+- name: Ensure firewalld pkg is installed
+  ansible.builtin.dnf:
+    name: firewalld
+    state: latest
+  notify:
+    - firewalld
+
+- name: Ensure firewalld svc is started and enabled
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
 - name: Permit auditd traffic in default zone
   ansible.posix.firewalld:
-    port: {{ auditd_port }}/{{ auditd_proto }}
+    port: "{{ auditd_port ~ '/' ~ auditd_proto }}"
     permanent: true
     zone: public
     state: enabled

@@ -6,3 +6,12 @@
     state: restarted
     enabled: yes
     use: service
+
+- name: firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: firewall-cmd
+  ansible.builtin.command: firewall-cmd --reload

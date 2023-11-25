@@ -1,10 +1,12 @@
 ---
 - name: Configure remote logging for all defined rhel machines
-  hosts: all,!audisp-server
+  hosts: all,!audisp_server
+  gather_facts: no
   roles:
-    - audispd-clients
+    - audisp-client
 
 - name: Configure centralized logging server for all defined rhel machines
-  hosts: audisp-server
+  hosts: audisp_server
+  gather_facts: no
   roles:
     - audisp-server

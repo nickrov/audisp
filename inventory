@@ -1,5 +1,5 @@
-[audisp-server]
-servera
+[audisp_server]
+controlnode
 
-[audisp-clients]
-clienta
+[audisp_clients]
+SAP_Server
