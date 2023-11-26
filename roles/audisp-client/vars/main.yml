@@ -2,5 +2,5 @@
 # vars file for audisp-client
 
 # Set audisp_server to hostname of central logging server
-audisp_server: central-logger
+audisp_server: controlnode
 auditd_port: 1000

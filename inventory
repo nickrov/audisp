@@ -1,5 +1,5 @@
 [audisp_server]
-controlnode
+central-logger
 
 [audisp_clients]
-SAP_Server
+servera

@@ -12,6 +12,12 @@
   notify:
     - firewalld
 
+- name: Ensure host logs contain hostname in logs forwarded to server
+  ansible.builtin.lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: '^name_format'
+    line: name_format = HOSTNAME
+
 - name: Add new audisp server to audispd-remote.conf
   ansible.builtin.lineinfile:
     path: /etc/audit/audisp-remote.conf

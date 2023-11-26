@@ -26,6 +26,8 @@
     zone: public
     state: enabled
     immediate: true
+  notify:
+    - firewall-cmd
 
 - name: Configure selinux to allow incoming logs on port "{{ auditd_port }}"
   community.general.seport:
