@@ -1,4 +1,4 @@
-Role Name
+Audispd Ansible Role
 =========
 
 Implement bare minumum requirements to deploy and auditd server and configure hosts to forward logs
